@@ -14,6 +14,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3027CB
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{1323E432-807F-4AA6-AE54-D0009B298AE6}"
+	ProjectSection(SolutionItems) = preProject
+		Documentation\format.c = Documentation\format.c
+		Documentation\ws-1080-1090-2080-cal.doc = Documentation\ws-1080-1090-2080-cal.doc
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
