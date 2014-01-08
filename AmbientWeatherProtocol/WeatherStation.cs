@@ -5,7 +5,12 @@ using System.Linq;
 
 namespace AmbientWeather
 {
-    public class WeatherStation : IDisposable
+    public delegate void HistoryDataReportEventHandler(HistoryDataReport historyDataReport);
+    public delegate void SettingsReportEventHandler(SettingsReport settingsReport);
+    public delegate void WeatherStationConnectedEventHandler();
+    public delegate void WeatherStationDisconnectedEventHandler();
+
+    public class WeatherStation : IWeatherStation, IDisposable
     {
         private const int AmbientWeatherVendorId = 0x1941;
         private const int AmbientWeatherProductId = 0x8021;
@@ -27,7 +32,7 @@ namespace AmbientWeather
 
         private readonly HidDevice _weatherStation;
 
-        public WeatherStation(HidDevice hidDevice)
+        private WeatherStation(HidDevice hidDevice)
         {
             _weatherStation = hidDevice;
 
@@ -44,12 +49,11 @@ namespace AmbientWeather
             Dispose();
         }
 
-        public static WeatherStation OpenDevice()
+        public static IWeatherStation OpenDevice()
         {
             return HidDevices.Enumerate(AmbientWeatherVendorId, AmbientWeatherProductId).Select(x => new WeatherStation(x)).FirstOrDefault();
         }
 
-        public delegate void SettingsReportEventHandler(SettingsReport settingsReport);
         public event SettingsReportEventHandler SettingsReported;
 
         protected virtual void OnSettingsReport(SettingsReport settingsReport)
@@ -58,7 +62,6 @@ namespace AmbientWeather
             if (handler != null) handler(settingsReport);
         }
 
-        public delegate void HistoryDataReportEventHandler(HistoryDataReport historyDataReport);
         public event HistoryDataReportEventHandler HistoryDataReported;
 
         protected virtual void OnHistoryDataReport(HistoryDataReport historyDataReport)
@@ -67,7 +70,6 @@ namespace AmbientWeather
             if (handler != null) handler(historyDataReport);
         }
 
-        public delegate void WeatherStationConnectedEventHandler();
         public event WeatherStationConnectedEventHandler WeatherStationConnected;
 
         protected virtual void OnWeatherStationConnected()
@@ -76,7 +78,6 @@ namespace AmbientWeather
             if (handler != null) handler();
         }
 
-        public delegate void WeatherStationDisconnectedEventHandler();
         public event WeatherStationDisconnectedEventHandler WeatherStationDisconnected;
 
         protected virtual void OnWeatherStationDisconnected()
@@ -153,7 +154,7 @@ namespace AmbientWeather
             return !endOfStreamFound;
         }
 
-        public bool DownloadBlock(int address, Func<IEnumerable<byte>, bool> onDataAction)
+        private bool DownloadBlock(int address, Func<IEnumerable<byte>, bool> onDataAction)
         {
             var data = new byte[9];
             data[0] = 0x00;

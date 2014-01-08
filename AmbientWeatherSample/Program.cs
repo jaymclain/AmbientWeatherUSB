@@ -10,8 +10,8 @@ namespace AmbientWeatherSample
         {
             var weatherStation = WeatherStation.OpenDevice();
 
-            //weatherStation.SettingsReported += weatherStation_SettingsReported;
-            //weatherStation.DownloadSettings();
+            weatherStation.SettingsReported += weatherStation_SettingsReported;
+            weatherStation.DownloadSettings();
 
             weatherStation.HistoryDataReported += weatherStation_HistoryDataReported;
             weatherStation.DownloadHistoryData();

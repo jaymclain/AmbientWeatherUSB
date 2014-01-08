@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="HistoryDataReport.cs" />
     <Compile Include="IReport.cs" />
+    <Compile Include="IWeatherStation.cs" />
     <Compile Include="Report.cs" />
     <Compile Include="SettingsReport.cs" />
     <Compile Include="Extensions\UshortExensions.cs" />
