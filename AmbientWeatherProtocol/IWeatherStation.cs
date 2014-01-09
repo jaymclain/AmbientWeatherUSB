@@ -1,15 +1,18 @@
-﻿namespace AmbientWeather
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace AmbientWeather
 {
     public interface IWeatherStation
     {
-        void DownloadSettings();
-        void DownloadHistoryData();
-
         bool Connected { get; }
+
+        Settings Settings { get; }
+        IEnumerable<HistoryData> History { get; }
 
         event WeatherStationConnectedEventHandler WeatherStationConnected;
         event WeatherStationDisconnectedEventHandler WeatherStationDisconnected;
-        event SettingsReportEventHandler SettingsReported;
-        event HistoryDataReportEventHandler HistoryDataReported;
+        event SettingsLoadedEventHandler SettingsLoaded;
+        event HistoryDataEventHandler HistoryData;
     }
 }

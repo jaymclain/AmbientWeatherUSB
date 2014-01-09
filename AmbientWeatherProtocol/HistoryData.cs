@@ -7,7 +7,7 @@ using AmbientWeather.Extensions;
 namespace AmbientWeather
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 16)]
-    public class HistoryDataReport
+    public class HistoryData
     {
         public readonly byte SampleInterval;
         public readonly byte IndoorPercentHumidity;

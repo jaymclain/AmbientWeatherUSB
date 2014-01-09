@@ -5,16 +5,13 @@ using System.Linq;
 
 namespace AmbientWeather
 {
-    public delegate void HistoryDataReportEventHandler(HistoryDataReport historyDataReport);
-    public delegate void SettingsReportEventHandler(SettingsReport settingsReport);
-    public delegate void WeatherStationConnectedEventHandler();
-    public delegate void WeatherStationDisconnectedEventHandler();
+    public delegate void HistoryDataEventHandler(IWeatherStation weatherStation, HistoryData historyDataReport);
+    public delegate void SettingsLoadedEventHandler(IWeatherStation weatherStation, Settings settingsReport);
+    public delegate void WeatherStationConnectedEventHandler(IWeatherStation weatherStation);
+    public delegate void WeatherStationDisconnectedEventHandler(IWeatherStation weatherStation);
 
     public class WeatherStation : IWeatherStation, IDisposable
     {
-        private const int AmbientWeatherVendorId = 0x1941;
-        private const int AmbientWeatherProductId = 0x8021;
-
         private const byte WriteCommand = 0xA0;
         private const byte ReadCommand = 0xA1;
         private const byte WriteCommandWord = 0xA2;
@@ -31,8 +28,9 @@ namespace AmbientWeather
         private const int HistoryDataBlockLength = 0x10;
 
         private readonly HidDevice _weatherStation;
+        private readonly List<HistoryData> _history; 
 
-        private WeatherStation(HidDevice hidDevice)
+        public WeatherStation(HidDevice hidDevice)
         {
             _weatherStation = hidDevice;
 
@@ -41,7 +39,10 @@ namespace AmbientWeather
 
             if (!_weatherStation.IsOpen)
                 _weatherStation.OpenDevice();
+
             _weatherStation.MonitorDeviceEvents = true;
+
+            _history = new List<HistoryData>();
         }
 
         ~WeatherStation()
@@ -49,41 +50,40 @@ namespace AmbientWeather
             Dispose();
         }
 
-        public static IWeatherStation OpenDevice()
+        public Settings Settings { get; private set; }
+
+        public event SettingsLoadedEventHandler SettingsLoaded;
+
+        protected virtual void OnSettingsLoaded(IWeatherStation weatherStation, Settings settings)
         {
-            return HidDevices.Enumerate(AmbientWeatherVendorId, AmbientWeatherProductId).Select(x => new WeatherStation(x)).FirstOrDefault();
+            var handler = SettingsLoaded;
+            if (handler != null) handler(weatherStation, settings);
         }
 
-        public event SettingsReportEventHandler SettingsReported;
+        public IEnumerable<HistoryData> History { get { return _history; } }
 
-        protected virtual void OnSettingsReport(SettingsReport settingsReport)
+        public event HistoryDataEventHandler HistoryData;
+
+        protected virtual void OnHistoryData(IWeatherStation weatherStation, HistoryData historyDataReport)
         {
-            var handler = SettingsReported;
-            if (handler != null) handler(settingsReport);
-        }
-
-        public event HistoryDataReportEventHandler HistoryDataReported;
-
-        protected virtual void OnHistoryDataReport(HistoryDataReport historyDataReport)
-        {
-            var handler = HistoryDataReported;
-            if (handler != null) handler(historyDataReport);
+            var handler = HistoryData;
+            if (handler != null) handler(weatherStation, historyDataReport);
         }
 
         public event WeatherStationConnectedEventHandler WeatherStationConnected;
 
-        protected virtual void OnWeatherStationConnected()
+        protected virtual void OnWeatherStationConnected(IWeatherStation weatherStation)
         {
             var handler = WeatherStationConnected;
-            if (handler != null) handler();
+            if (handler != null) handler(weatherStation);
         }
 
         public event WeatherStationDisconnectedEventHandler WeatherStationDisconnected;
 
-        protected virtual void OnWeatherStationDisconnected()
+        protected virtual void OnWeatherStationDisconnected(IWeatherStation weatherStation)
         {
             var handler = WeatherStationDisconnected;
-            if (handler != null) handler();
+            if (handler != null) handler(weatherStation);
         }
 
         public bool Connected { get; private set; }
@@ -91,16 +91,19 @@ namespace AmbientWeather
         private void _weatherStation_Inserted()
         {
             Connected = true;
-            OnWeatherStationConnected();
+            OnWeatherStationConnected(this);
+
+            DownloadSettings();
+            DownloadHistoryData();
         }
 
         private void _weatherStation_Removed()
         {
             Connected = false;
-            OnWeatherStationDisconnected();
+            OnWeatherStationDisconnected(this);
         }
 
-        public void DownloadSettings()
+        private void DownloadSettings()
         {
             var report = new Report(SettingsEndAddress - SettingsStartAddress);
 
@@ -115,11 +118,11 @@ namespace AmbientWeather
             }
 
             // Create data object from report
-            var stationReport = report.GetObject<SettingsReport>();
-            OnSettingsReport(stationReport);
+            Settings = report.GetObject<Settings>();
+            OnSettingsLoaded(this, Settings);
         }
 
-        public void DownloadHistoryData()
+        private void DownloadHistoryData()
         {
             for (var a = HistoryDataStartAddress; a < HistoryDataEndAddress; a += DataReadLength)
             {
@@ -147,8 +150,10 @@ namespace AmbientWeather
                 var report = new Report(HistoryDataBlockLength);
                 report.AddRawData(dataBlock);
 
-                var historyDataReport = report.GetObject<HistoryDataReport>();
-                OnHistoryDataReport(historyDataReport);
+                var historyData = report.GetObject<HistoryData>();
+                _history.Add(historyData);
+
+                OnHistoryData(this, historyData);
             }
 
             return !endOfStreamFound;

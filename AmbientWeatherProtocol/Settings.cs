@@ -9,7 +9,7 @@
 namespace AmbientWeather
 {
     [StructLayout(LayoutKind.Sequential, Pack=1, Size=256)]
-    public class SettingsReport
+    public class Settings
     {
         private readonly byte EepromInitializedFlag1;
         private readonly byte EepromInitailizedFlag2;

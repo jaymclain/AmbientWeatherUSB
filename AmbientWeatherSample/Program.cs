@@ -1,6 +1,7 @@
 ﻿using AmbientWeather;
-using System;
 using Newtonsoft.Json;
+using System;
+using System.Linq;
 
 namespace AmbientWeatherSample
 {
@@ -8,24 +9,22 @@ namespace AmbientWeatherSample
     {
         static void Main()
         {
-            var weatherStation = WeatherStation.OpenDevice();
+            var weatherStations = new WeatherStations();
+            var weatherStation = weatherStations.First();
 
-            weatherStation.SettingsReported += weatherStation_SettingsReported;
-            weatherStation.DownloadSettings();
-
-            weatherStation.HistoryDataReported += weatherStation_HistoryDataReported;
-            weatherStation.DownloadHistoryData();
+            weatherStation.SettingsLoaded += WeatherStationSettingsLoaded;
+            weatherStation.HistoryData += WeatherStationHistoryData;
             
             Console.WriteLine("Press any key to quit.");
             Console.ReadKey();
         }
 
-        private static void weatherStation_HistoryDataReported(HistoryDataReport historyDataReport)
+        private static void WeatherStationHistoryData(IWeatherStation weatherStation, HistoryData historyDataReport)
         {
             Console.WriteLine(JsonConvert.SerializeObject(historyDataReport));
         }
 
-        static void weatherStation_SettingsReported(SettingsReport stationReport)
+        static void WeatherStationSettingsLoaded(IWeatherStation weatherStation, Settings stationReport)
         {
             Console.WriteLine(JsonConvert.SerializeObject(stationReport));
         }
