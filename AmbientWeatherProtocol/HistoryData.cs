@@ -12,10 +12,10 @@ namespace AmbientWeather
         public readonly byte SampleInterval;
         public readonly byte IndoorPercentHumidity;
         private readonly ushort IndoorTemperatureData;
-        public double IndoorTemperature { get { return IndoorTemperatureData * 0.1d; } }
+        public Temperature IndoorTemperature { get { return new Temperature(IndoorTemperatureData.MsbSigned() * 0.1d); } }
         public readonly byte OutdoorPercentHumidity;
         private readonly ushort OutdoorTemperatureData;
-        public double OutdoorTemperature { get { return OutdoorTemperatureData.MsbSigned() * 0.1d; } }
+        public Temperature OutdoorTemperature { get { return new Temperature(OutdoorTemperatureData.MsbSigned() * 0.1d); } }
         private readonly ushort AbsolutePressureData;
         public double AbsolutePressure { get { return AbsolutePressureData * 0.1d; } }
         private readonly byte AverageWindSpeedData;

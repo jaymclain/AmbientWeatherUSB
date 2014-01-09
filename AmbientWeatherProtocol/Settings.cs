@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Linq;
+using System.Runtime.InteropServices;
+using AmbientWeather.Extensions;
 
 #pragma warning disable 169
 #pragma warning disable 649
@@ -25,11 +28,12 @@ namespace AmbientWeather
 
         private readonly byte empty;
 
-        public readonly byte SamplingInterval;   // 1-240 Minutes
+        private readonly byte SamplingIntervalData;
+        public TimeSpan SamplingInterval { get { return TimeSpan.FromMinutes(SamplingIntervalData); } }
 
         private readonly byte CurrentUnitSettingFlag1;
-        public TemperatureUnits IndoorTemperatureUnits { get { return (TemperatureUnits)(CurrentUnitSettingFlag1 & 0x01); } }
-        public TemperatureUnits OutdoorTemperatureUnits { get { return (TemperatureUnits)((CurrentUnitSettingFlag1 & 0x02) >> 1); } }
+        public TemperatureUnit IndoorTemperatureUnit { get { return (TemperatureUnit)(CurrentUnitSettingFlag1 & 0x01); } }
+        public TemperatureUnit OutdoorTemperatureUnit { get { return (TemperatureUnit)((CurrentUnitSettingFlag1 & 0x02) >> 1); } }
         public RainfallUnits RainfallUnits { get { return (RainfallUnits)((CurrentUnitSettingFlag1 & 0x04) >> 2); } }
         public PressureUnits PressureUnits { get { return (PressureUnits)((CurrentUnitSettingFlag1 & 0xE0) >> 5); } }
 
@@ -39,12 +43,48 @@ namespace AmbientWeather
         private readonly byte DisplayFormatFlag1;
         public PressureType PressureType { get { return (PressureType)(DisplayFormatFlag1 & 0x01); } }
         private readonly byte DisplayFormatFlag2;
-    }
+        private readonly byte AlarmEnableFlag1;
+        private readonly byte AlarmEnableFlag2;
+        private readonly byte AlarmEnableFlag3;
+        private readonly byte TimeZoneData;
+        public TimeZoneInfo TimeZone { get { return TimeZoneInfo.GetSystemTimeZones().First(z => z.BaseUtcOffset.Hours == TimeZoneData.MsbSigned()); } }
+        private readonly byte Reserved1;
+        private readonly byte DataRefreshed;
+        private readonly ushort HistoryDataSets;
+        private readonly byte Reserved2;
+        private readonly ushort HistoryDataStartAddress;
+        private readonly ushort RelativePressure;
+        private readonly ushort AbsolutePressure;
+        private readonly ushort Reserved3;
+        private readonly ushort WindCorrection;
+        private readonly ushort OutdoorTemperatureOffsetData;
+        public short OutdoorTemperatureOffset { get { return OutdoorTemperatureOffsetData.MsbSigned(); } }
 
-    public enum TemperatureUnits
-    {
-        Celsius = 0,
-        Fahrenheit = 1,
+        private readonly ushort IndoorTemperatureOffsetData;
+        public short IndoorTemperatureOffset { get { return IndoorTemperatureOffsetData.MsbSigned(); } }
+
+        private readonly ushort OutdoorHumidityOffsetData;
+        public short OutdoorHumidityOffset { get { return OutdoorHumidityOffsetData.MsbSigned(); } }
+        private readonly ushort IndoorHumidityOffsetData;
+        public short IndoorHumidityOffset { get { return IndoorHumidityOffsetData.MsbSigned(); } }
+
+        private readonly byte IndoorHumdityHighAlarm;
+        private readonly byte IndoorHumdityLowAlarm;
+        private readonly ushort IndoorTemperatureHighAlarm;
+        private readonly ushort IndoorTemperatureLowAlarm;
+        private readonly byte OutdoorHumdityHighAlarm;
+        private readonly byte OutdoorHumdityLowAlarm;
+        private readonly ushort OutdoorTemperatureHighAlarm;
+        private readonly ushort OutdoorTemperatureLowAlarm;
+        private readonly ushort WindChillHighAlarm;
+        private readonly ushort WindChillLowAlarm;
+        private readonly ushort DewPointHighAlarm;
+        private readonly ushort DewPointLowAlarm;
+        private readonly ushort AbsolutePressureHighAlarm;
+        private readonly ushort AbsolutePressureLowAlarm;
+        private readonly ushort RelativePressureHighAlarm;
+        private readonly ushort RelativePressureLowAlarm;
+
     }
 
     public enum RainfallUnits

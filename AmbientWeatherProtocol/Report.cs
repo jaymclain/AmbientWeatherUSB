@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -47,9 +48,9 @@ namespace AmbientWeather
         {
             foreach (var b in data)
             {
-                Console.Write("{0:X02} ", b);
+                Debug.Write(string.Format("{0:X02} ", b));
             }
-            Console.WriteLine(string.Empty);
+            Debug.WriteLine(string.Empty);
         }
 
         public void Dispose()

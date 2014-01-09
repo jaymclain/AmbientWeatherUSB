@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		Documentation\ws-1080-1090-2080-cal.doc = Documentation\ws-1080-1090-2080-cal.doc
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{58B9C062-235F-4E77-A96F-AD2DF9442CCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{5E03F929-E2CA-47AF-85B4-8873578111F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,8 +38,15 @@ Global
 		{2C268F73-74FA-4077-A039-709A4ACC1282}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C268F73-74FA-4077-A039-709A4ACC1282}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C268F73-74FA-4077-A039-709A4ACC1282}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E03F929-E2CA-47AF-85B4-8873578111F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E03F929-E2CA-47AF-85B4-8873578111F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E03F929-E2CA-47AF-85B4-8873578111F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E03F929-E2CA-47AF-85B4-8873578111F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5E03F929-E2CA-47AF-85B4-8873578111F3} = {58B9C062-235F-4E77-A96F-AD2DF9442CCE}
 	EndGlobalSection
 EndGlobal
