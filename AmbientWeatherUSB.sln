@@ -1,28 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmbientWeatherSample", "AmbientWeatherSample\AmbientWeatherSample.csproj", "{197992F5-122E-4623-80E6-18311B4415AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmbientWeather", "AmbientWeather\AmbientWeather.csproj", "{791B64A5-3B8C-4051-88A1-AFD47D7472DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmbientWeather", "AmbientWeatherProtocol\AmbientWeather.csproj", "{2C268F73-74FA-4077-A039-709A4ACC1282}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmbientWeather.UnitTests", "AmbientWeather.UnitTests\AmbientWeather.UnitTests.csproj", "{F5A34438-D064-4348-B032-13F81886697C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3027CB57-8CBE-4BEA-8987-5B2A0623C0C7}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{1323E432-807F-4AA6-AE54-D0009B298AE6}"
-	ProjectSection(SolutionItems) = preProject
-		Documentation\format.c = Documentation\format.c
-		Documentation\ws-1080-1090-2080-cal.doc = Documentation\ws-1080-1090-2080-cal.doc
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{58B9C062-235F-4E77-A96F-AD2DF9442CCE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{5E03F929-E2CA-47AF-85B4-8873578111F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmbientWeather.Sample", "AmbientWeather.Sample\AmbientWeather.Sample.csproj", "{DBB88181-8A90-45AA-AF97-8075EEF3AE96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,23 +15,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{197992F5-122E-4623-80E6-18311B4415AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{197992F5-122E-4623-80E6-18311B4415AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{197992F5-122E-4623-80E6-18311B4415AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{197992F5-122E-4623-80E6-18311B4415AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C268F73-74FA-4077-A039-709A4ACC1282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C268F73-74FA-4077-A039-709A4ACC1282}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C268F73-74FA-4077-A039-709A4ACC1282}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C268F73-74FA-4077-A039-709A4ACC1282}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E03F929-E2CA-47AF-85B4-8873578111F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E03F929-E2CA-47AF-85B4-8873578111F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E03F929-E2CA-47AF-85B4-8873578111F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E03F929-E2CA-47AF-85B4-8873578111F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791B64A5-3B8C-4051-88A1-AFD47D7472DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791B64A5-3B8C-4051-88A1-AFD47D7472DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791B64A5-3B8C-4051-88A1-AFD47D7472DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791B64A5-3B8C-4051-88A1-AFD47D7472DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5A34438-D064-4348-B032-13F81886697C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5A34438-D064-4348-B032-13F81886697C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5A34438-D064-4348-B032-13F81886697C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5A34438-D064-4348-B032-13F81886697C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB88181-8A90-45AA-AF97-8075EEF3AE96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB88181-8A90-45AA-AF97-8075EEF3AE96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB88181-8A90-45AA-AF97-8075EEF3AE96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB88181-8A90-45AA-AF97-8075EEF3AE96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5E03F929-E2CA-47AF-85B4-8873578111F3} = {58B9C062-235F-4E77-A96F-AD2DF9442CCE}
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9BEE3E8E-1017-4B43-8581-B8507464E7E7}
 	EndGlobalSection
 EndGlobal
