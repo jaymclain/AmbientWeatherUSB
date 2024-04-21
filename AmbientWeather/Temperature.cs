@@ -19,7 +19,7 @@ public class Temperature
     private readonly double _celsiusTemperature;
 
     private readonly Dictionary<TemperatureUnit, Func<double, double>> _converters =
-        new Dictionary<TemperatureUnit, Func<double, double>>
+        new()
         {
             { TemperatureUnit.Celsius,      t => t },
             { TemperatureUnit.Fahrenheit,   t => (t * 1.8d) + 32.0d },
@@ -38,7 +38,7 @@ public class Temperature
 
     public double Celsius => _converters[TemperatureUnit.Celsius].Invoke(_celsiusTemperature);
 
-    public double Farenheit => _converters[TemperatureUnit.Fahrenheit].Invoke(_celsiusTemperature);
+    public double Fahrenheit => _converters[TemperatureUnit.Fahrenheit].Invoke(_celsiusTemperature);
 
     public double Kelvin => _converters[TemperatureUnit.Kelvin].Invoke(_celsiusTemperature);
 
@@ -59,8 +59,7 @@ public class Temperature
 
     public string ToString(IFormatProvider? formatProvider)
     {
-        if (formatProvider == null)
-            formatProvider = CultureInfo.CurrentCulture;
+        formatProvider ??= CultureInfo.CurrentCulture;
 
         return string.Format(formatProvider, "{0:F2}  °C", _celsiusTemperature);
     }

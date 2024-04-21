@@ -13,7 +13,7 @@ namespace AmbientWeather;
 public class Settings
 {
     private readonly byte EepromInitializedFlag1;
-    private readonly byte EepromInitailizedFlag2;
+    private readonly byte EepromInitializedFlag2;
 
     public readonly ushort Model;
     public readonly byte Version;
@@ -66,12 +66,12 @@ public class Settings
     private readonly ushort IndoorHumidityOffsetData;
     public short IndoorHumidityOffset => IndoorHumidityOffsetData.MsbSigned();
 
-    private readonly byte IndoorHumdityHighAlarm;
-    private readonly byte IndoorHumdityLowAlarm;
+    private readonly byte IndoorHumidityHighAlarm;
+    private readonly byte IndoorHumidityLowAlarm;
     private readonly ushort IndoorTemperatureHighAlarm;
     private readonly ushort IndoorTemperatureLowAlarm;
-    private readonly byte OutdoorHumdityHighAlarm;
-    private readonly byte OutdoorHumdityLowAlarm;
+    private readonly byte OutdoorHumidityHighAlarm;
+    private readonly byte OutdoorHumidityLowAlarm;
     private readonly ushort OutdoorTemperatureHighAlarm;
     private readonly ushort OutdoorTemperatureLowAlarm;
     private readonly ushort WindChillHighAlarm;

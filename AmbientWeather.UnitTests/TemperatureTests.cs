@@ -15,9 +15,9 @@
         [InlineData(0.0d, 32.0d)]
         [InlineData(-40.0d, -40.0d)]
         [InlineData(20.0d, 68.0d)]
-        public void WhenInvoked_Farenheit_ShouldConvert(double input, double expected)
+        public void WhenInvoked_Fahrenheit_ShouldConvert(double input, double expected)
         {
-            new Temperature(input).Farenheit.ShouldBe(expected);
+            new Temperature(input).Fahrenheit.ShouldBe(expected);
         }
         
         [Theory]

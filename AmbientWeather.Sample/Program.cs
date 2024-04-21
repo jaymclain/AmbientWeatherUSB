@@ -21,7 +21,7 @@ internal class Program
         Console.WriteLine(JsonSerializer.Serialize(historyDataReport));
     }
 
-    static void WeatherStationSettingsLoaded(IWeatherStation weatherStation, Settings stationReport)
+    private static void WeatherStationSettingsLoaded(IWeatherStation weatherStation, Settings stationReport)
     {
         Console.WriteLine(JsonSerializer.Serialize(stationReport));
     }
