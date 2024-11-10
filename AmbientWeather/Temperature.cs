@@ -14,11 +14,9 @@ public enum TemperatureUnit
     Romer
 }
 
-public class Temperature
+public class Temperature(double celsiusTemperature)
 {
-    private readonly double _celsiusTemperature;
-
-    private readonly Dictionary<TemperatureUnit, Func<double, double>> _converters =
+    private static readonly Dictionary<TemperatureUnit, Func<double, double>> _converters =
         new()
         {
             { TemperatureUnit.Celsius,      t => t },
@@ -31,26 +29,21 @@ public class Temperature
             { TemperatureUnit.Romer,        t => (t * 0.525d) + 7.5d }
         };
 
-    public Temperature(double celsiusTemperature)
-    {
-        _celsiusTemperature = celsiusTemperature;
-    }
+    public double Celsius => _converters[TemperatureUnit.Celsius].Invoke(celsiusTemperature);
 
-    public double Celsius => _converters[TemperatureUnit.Celsius].Invoke(_celsiusTemperature);
+    public double Fahrenheit => _converters[TemperatureUnit.Fahrenheit].Invoke(celsiusTemperature);
 
-    public double Fahrenheit => _converters[TemperatureUnit.Fahrenheit].Invoke(_celsiusTemperature);
+    public double Kelvin => _converters[TemperatureUnit.Kelvin].Invoke(celsiusTemperature);
 
-    public double Kelvin => _converters[TemperatureUnit.Kelvin].Invoke(_celsiusTemperature);
+    public double Rankine => _converters[TemperatureUnit.Rankine].Invoke(celsiusTemperature);
 
-    public double Rankine => _converters[TemperatureUnit.Rankine].Invoke(_celsiusTemperature);
+    public double Delisle => _converters[TemperatureUnit.Delisle].Invoke(celsiusTemperature);
 
-    public double Delisle => _converters[TemperatureUnit.Delisle].Invoke(_celsiusTemperature);
+    public double Newton => _converters[TemperatureUnit.Newton].Invoke(celsiusTemperature);
 
-    public double Newton => _converters[TemperatureUnit.Newton].Invoke(_celsiusTemperature);
+    public double Raeumur => _converters[TemperatureUnit.Raeumur].Invoke(celsiusTemperature);
 
-    public double Raeumur => _converters[TemperatureUnit.Raeumur].Invoke(_celsiusTemperature);
-
-    public double Romer => _converters[TemperatureUnit.Romer].Invoke(_celsiusTemperature);
+    public double Romer => _converters[TemperatureUnit.Romer].Invoke(celsiusTemperature);
 
     public override string ToString()
     {
@@ -61,6 +54,6 @@ public class Temperature
     {
         formatProvider ??= CultureInfo.CurrentCulture;
 
-        return string.Format(formatProvider, "{0:F2}  °C", _celsiusTemperature);
+        return string.Format(formatProvider, "{0:F2}  °C", celsiusTemperature);
     }
 }
